@@ -10,26 +10,33 @@
  * Stable tag: 1.0
  */
 
-// Inclui o arquivo de helper
-require_once plugin_dir_path(__FILE__) . 'includes/helper.php';
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
 
-// Função de instalação do plugin
-register_activation_hook(__FILE__, 'correios_install_plugin');
-function correios_install_plugin() {
-    require_once plugin_dir_path(__FILE__) . 'install.php';
+// Include files
+include_once 'includes/install.php';
+include_once 'includes/uninstall.php';
+include_once 'includes/helper.php';
+include_once 'includes/vendor-dashboard.php';
+
+// Função de ativação
+function correios_activate() {
     correios_install();
+    correios_populate_initial_data();
 }
+register_activation_hook( __FILE__, 'correios_activate' );
 
-// Função de desinstalação do plugin
-register_uninstall_hook(__FILE__, 'correios_uninstall_plugin');
-function correios_uninstall_plugin() {
-    require_once plugin_dir_path(__FILE__) . 'uninstall.php';
-    correios_uninstall();
+// Função de desinstalação
+register_uninstall_hook( __FILE__, 'correios_uninstall' );
+
+// Carregar o formulário no dashboard do vendedor
+add_action( 'wcfmmp_store_manage', 'correios_vendor_dashboard' );
+
+// Adiciona a opção de envio na configuração do WCFM
+add_filter( 'wcfmmp_shipping_options', 'correios_add_shipping_option' );
+
+function correios_add_shipping_option( $shipping_options ) {
+    $shipping_options['correios'] = __( 'Correios', 'correios-vendor-shipping' );
+    return $shipping_options;
 }
-
-// Inclui as configurações do remetente e integrações
-require_once plugin_dir_path(__FILE__) . 'includes/settings.php';
-
-// Adiciona o botão de geração de etiqueta nas ações do WCFM
-add_action('woocommerce_admin_order_actions_end', 'add_custom_order_actions_button', 100, 1);
-add_filter('wcfm_orders_actions', 'correios_wcfm_order_action_button', 10, 5);
