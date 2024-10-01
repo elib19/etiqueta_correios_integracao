@@ -1,11 +1,10 @@
 <?php
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-    exit();
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
 }
 
-global $wpdb;
-
-$table_name = $wpdb->prefix . 'correios_vendor_data';
-$wpdb->query( "DROP TABLE IF EXISTS $table_name" );
-
-delete_option( 'correios_version' );
+function correios_uninstall() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'correios_vendors';
+    $wpdb->query( "DROP TABLE IF EXISTS $table_name" );
+}
