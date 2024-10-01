@@ -14,18 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-// Include files
+// Inclui os arquivos necessários
 include_once 'includes/install.php';
 include_once 'includes/uninstall.php';
 include_once 'includes/helper.php';
+include_once 'includes/settings.php';
 include_once 'includes/vendor-dashboard.php';
-include_once 'includes/settings-page.php';
-include_once 'includes/vendor-data-form.php';
 
 // Função de ativação
 function correios_activate() {
     correios_install();
-    correios_populate_initial_data();
 }
 register_activation_hook( __FILE__, 'correios_activate' );
 
@@ -43,9 +41,10 @@ function correios_add_shipping_option( $shipping_options ) {
     return $shipping_options;
 }
 
-// Adiciona menu de configurações
+// Adiciona menu de configurações do plugin para o admin
 add_action( 'admin_menu', 'correios_add_admin_menu' );
 
 function correios_add_admin_menu() {
-    add_menu_page( 'Correios Settings', 'Correios', 'manage_options', 'correios_settings', 'correios_settings_page' );
+    add_menu_page( 'Configurações do Correios', 'Correios', 'manage_options', 'correios_settings', 'correios_settings_page' );
 }
+
