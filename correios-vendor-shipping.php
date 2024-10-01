@@ -19,7 +19,8 @@ include_once 'includes/install.php';
 include_once 'includes/uninstall.php';
 include_once 'includes/helper.php';
 include_once 'includes/vendor-dashboard.php';
-include_once 'includes/settings.php';
+include_once 'includes/settings-page.php';
+include_once 'includes/vendor-data-form.php';
 
 // Função de ativação
 function correios_activate() {
@@ -44,3 +45,7 @@ function correios_add_shipping_option( $shipping_options ) {
 
 // Adiciona menu de configurações
 add_action( 'admin_menu', 'correios_add_admin_menu' );
+
+function correios_add_admin_menu() {
+    add_menu_page( 'Correios Settings', 'Correios', 'manage_options', 'correios_settings', 'correios_settings_page' );
+}
