@@ -43,6 +43,17 @@ function correios_add_shipping_option( $shipping_options ) {
 
 // Adiciona menu de configurações do plugin para o admin
 add_action( 'admin_menu', 'correios_add_admin_menu' );
+function correios_add_admin_menu() {
+    add_menu_page( 
+        'Configurações do Correios', // Título da página
+        'Correios',                  // Título do menu
+        'manage_options',            // Capacidade necessária
+        'correios_settings',         // Slug da página
+        'correios_settings_page',    // Função que renderiza o conteúdo
+        'dashicons-admin-settings',  // Ícone do menu
+        90                           // Posição no menu
+    );
+}
 
 function correios_add_admin_menu() {
     add_menu_page( 'Configurações do Correios', 'Correios', 'manage_options', 'correios_settings', 'correios_settings_page' );
