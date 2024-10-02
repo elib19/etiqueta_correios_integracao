@@ -20,7 +20,6 @@ function correios_save_vendor_data( $vendor_id, $data ) {
             'remest'    => $data['remest'],
             'remcep'    => $data['remcep'],
             'remcpf'    => $data['remcpf'],
-            'correios_cartao' => $data['correios_cartao'], // Salvar o cartão
         )
     );
 }
