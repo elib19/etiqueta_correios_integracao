@@ -29,5 +29,4 @@ function correios_vendor_dashboard() {
     }
 
     include plugin_dir_path( __FILE__ ) . '../views/vendor-data-form.php';
-    include plugin_dir_path( __FILE__ ) . '../views/settings.php';
 }
