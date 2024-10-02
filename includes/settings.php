@@ -3,39 +3,43 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-// Exibe a página de configurações do administrador
+// Adiciona menu de configurações
+function correios_add_admin_menu() {
+    add_menu_page(
+        'Configurações Correios',
+        'Correios',
+        'manage_options',
+        'correios_settings',
+        'correios_settings_page'
+    );
+}
+add_action( 'admin_menu', 'correios_add_admin_menu' );
+
 function correios_settings_page() {
-    if ( ! current_user_can( 'manage_options' ) ) {
-        return;
-    }
-
-    if ( isset( $_POST['submit'] ) ) {
-        update_option( 'correios_api_key', sanitize_text_field( $_POST['correios_api_key'] ) );
-        update_option( 'correios_contract_number', sanitize_text_field( $_POST['correios_contract_number'] ) );
-        echo '<div class="notice notice-success is-dismissible"><p>Configurações salvas!</p></div>';
-    }
-
-    $api_key = get_option( 'correios_api_key', '' );
-    $contract_number = get_option( 'correios_contract_number', '' );
-
     ?>
     <div class="wrap">
-        <h1>Configurações do Correios</h1>
-        <form method="post" action="">
+        <h1>Configurações do Plugin Correios</h1>
+        <form method="post" action="options.php">
+            <?php
+            settings_fields( 'correios_options_group' );
+            do_settings_sections( 'correios_settings' );
+
+            $api_key = get_option( 'correios_api_key' );
+            ?>
             <table class="form-table">
-                <tr>
-                    <th scope="row"><label for="correios_api_key">Chave da API</label></th>
-                    <td><input type="text" name="correios_api_key" id="correios_api_key" value="<?php echo esc_attr( $api_key ); ?>" class="regular-text"></td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="correios_contract_number">Número do Contrato</label></th>
-                    <td><input type="text" name="correios_contract_number" id="correios_contract_number" value="<?php echo esc_attr( $contract_number ); ?>" class="regular-text"></td>
+                <tr valign="top">
+                    <th scope="row">API Key:</th>
+                    <td><input type="text" name="correios_api_key" value="<?php echo esc_attr( $api_key ); ?>" class="regular-text" required/></td>
                 </tr>
             </table>
-            <p class="submit">
-                <input type="submit" name="submit" id="submit" class="button button-primary" value="Salvar Configurações">
-            </p>
+            <?php submit_button(); ?>
         </form>
     </div>
     <?php
+}
+
+add_action( 'admin_init', 'correios_settings_init' );
+
+function correios_settings_init() {
+    register_setting( 'correios_options_group', 'correios_api_key' );
 }
