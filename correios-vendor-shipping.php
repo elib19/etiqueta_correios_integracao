@@ -30,10 +30,17 @@ register_activation_hook( __FILE__, 'correios_activate' );
 // Adiciona o formulário no dashboard do vendedor
 add_action( 'wcfmmp_store_manage', 'correios_vendor_dashboard' );
 
-// Adiciona as configurações ao menu de administração
-add_action( 'admin_menu', 'correios_add_admin_menu' );
+// Adiciona as configurações ao menu do WCFM
+add_filter( 'wcfm_menu', 'correios_add_wcfm_menu' );
 
-// Adiciona o menu de configurações
-function correios_add_admin_menu() {
-    add_menu_page( 'Configurações Correios', 'Correios', 'manage_options', 'correios_settings', 'correios_settings_page' );
+function correios_add_wcfm_menu( $menus ) {
+    $menus['correios_settings'] = array(
+        'label' => __( 'Configurações Correios', 'correios' ),
+        'icon'  => 'fa fa-cog',
+        'priority' => 80,
+    );
+    return $menus;
 }
+
+// Carrega a página de configurações do plugin
+add_action( 'wcfmmp_page_correios_settings', 'correios_settings_page' );
