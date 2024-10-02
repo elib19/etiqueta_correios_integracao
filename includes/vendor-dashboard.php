@@ -33,6 +33,8 @@ function correios_vendor_dashboard() {
     $vendor_data = correios_get_vendor_data( $vendor_id );
 
     include plugin_dir_path( __FILE__ ) . '../views/vendor-data-form.php';
+    include plugin_dir_path( __FILE__ ) . '../views/settings-page.php';
+    
 }
 
 // Função para obter os dados do vendedor
