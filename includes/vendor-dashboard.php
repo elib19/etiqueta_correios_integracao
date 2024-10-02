@@ -8,6 +8,7 @@ function correios_vendor_dashboard() {
         return;
     }
 
+    // Processa o formulário se o método for POST
     if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
         $data = array(
             'remnom' => sanitize_text_field( $_POST['remnom'] ),
