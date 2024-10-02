@@ -1,8 +1,4 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
-}
-
 function correios_install() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'correios_vendors';
