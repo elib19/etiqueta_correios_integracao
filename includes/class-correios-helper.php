@@ -1,39 +1,85 @@
 <?php
+defined('ABSPATH') || exit;
 
 class Correios_Helper {
-
-    public static function init() {
-        add_action( 'wcfmmp_store_before_main_content', array( __CLASS__, 'generate_label_interface' ) );
-    }
-
     public static function generate_label_interface() {
-        if( ! wcfm_is_vendor() ) return; // Garantir que apenas vendedores tenham acesso
+        if (!wcfm_is_vendor()) {
+            return; // Apenas vendedores têm acesso
+        }
 
-        include CORREIOS_WCFM_PATH . 'includes/views/correios-generate-label-view.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Captura os dados do formulário
+            $destinatario = sanitize_text_field($_POST['destinatario']);
+            $endereco = sanitize_text_field($_POST['endereco']);
+            $cidade = sanitize_text_field($_POST['cidade']);
+            $estado = sanitize_text_field($_POST['estado']);
+            $cep = sanitize_text_field($_POST['cep']);
+            
+            // Chama a função para gerar a etiqueta
+            $resultado = self::gerar_etiqueta($destinatario, $endereco, $cidade, $estado, $cep);
+            
+            // Manipula a resposta
+            if ($resultado['success']) {
+                echo '<div class="updated"><p>Etiqueta gerada com sucesso! Código: ' . esc_html($resultado['codigo']) . '</p></div>';
+            } else {
+                echo '<div class="error"><p>Erro ao gerar etiqueta: ' . esc_html($resultado['mensagem']) . '</p></div>';
+            }
+        }
+
+        include plugin_dir_path(__FILE__) . 'views/correios-generate-label-view.php';
     }
 
-    public static function generate_label( $data ) {
-        $user_correios = get_option( 'correios_user' );
-        $cartao_correios = get_option( 'correios_cartao' );
-        $api_key_correios = get_option( 'correios_api_key' );
+    private static function gerar_etiqueta($destinatario, $endereco, $cidade, $estado, $cep) {
+        // Obtém as credenciais do administrador
+        $usuario = get_option('correios_api_usuario');
+        $cartao = get_option('correios_api_cartao');
+        $api_key = get_option('correios_api_key');
 
-        // Chamada à API dos Correios para gerar a etiqueta (implementação fictícia)
-        $response = wp_remote_post( 'https://api.correios.com.br/etiquetas', array(
-            'body' => json_encode( array(
-                'user'     => $user_correios,
-                'cartao'   => $cartao_correios,
-                'api_key'  => $api_key_correios,
-                'data'     => $data
-            ) ),
-            'headers' => array(
+        // Prepare os dados para a API
+        $dados = array(
+            'usuario' => $usuario,
+            'cartao' => $cartao,
+            'api_key' => $api_key,
+            'destinatario' => $destinatario,
+            'endereco' => $endereco,
+            'cidade' => $cidade,
+            'estado' => $estado,
+            'cep' => $cep
+        );
+
+        // URL da API fictícia dos Correios (substitua pela URL real)
+        $url = 'https://api.correios.com.br/gerarEtiqueta';
+
+        // Faz a requisição à API
+        $response = wp_remote_post($url, array(
+            'method'    => 'POST',
+            'body'      => json_encode($dados),
+            'headers'   => array(
                 'Content-Type' => 'application/json',
             ),
         ));
 
-        if( is_wp_error( $response ) ) {
-            return false;
+        // Verifica a resposta da API
+        if (is_wp_error($response)) {
+            return array(
+                'success' => false,
+                'mensagem' => $response->get_error_message(),
+            );
         }
 
-        return json_decode( wp_remote_retrieve_body( $response ), true );
+        $body = json_decode(wp_remote_retrieve_body($response), true);
+
+        // Processa a resposta
+        if (isset($body['sucesso']) && $body['sucesso']) {
+            return array(
+                'success' => true,
+                'codigo' => $body['codigo'], // Código da etiqueta gerada
+            );
+        } else {
+            return array(
+                'success' => false,
+                'mensagem' => $body['mensagem'] ?? 'Erro desconhecido.',
+            );
+        }
     }
 }
