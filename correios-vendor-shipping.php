@@ -14,12 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-// Inclui os arquivos necessários
+// Include files
 include_once 'includes/install.php';
 include_once 'includes/uninstall.php';
 include_once 'includes/helper.php';
-include_once 'includes/settings.php';
 include_once 'includes/vendor-dashboard.php';
+include_once 'includes/settings-page.php';
 
 // Função de ativação
 function correios_activate() {
@@ -33,29 +33,13 @@ register_uninstall_hook( __FILE__, 'correios_uninstall' );
 // Carregar o formulário no dashboard do vendedor
 add_action( 'wcfmmp_store_manage', 'correios_vendor_dashboard' );
 
-// Adiciona a opção de envio na configuração do WCFM
+// Adiciona menu de configurações
+add_action( 'admin_menu', 'correios_add_admin_menu' );
+
+// Carrega as opções de envio na configuração do WCFM
 add_filter( 'wcfmmp_shipping_options', 'correios_add_shipping_option' );
 
 function correios_add_shipping_option( $shipping_options ) {
     $shipping_options['correios'] = __( 'Correios', 'correios-vendor-shipping' );
     return $shipping_options;
 }
-
-// Adiciona menu de configurações do plugin para o admin
-add_action( 'admin_menu', 'correios_add_admin_menu' );
-function correios_add_admin_menu() {
-    add_menu_page( 
-        'Configurações do Correios', // Título da página
-        'Correios',                  // Título do menu
-        'manage_options',            // Capacidade necessária
-        'correios_settings',         // Slug da página
-        'correios_settings_page',    // Função que renderiza o conteúdo
-        'dashicons-admin-settings',  // Ícone do menu
-        90                           // Posição no menu
-    );
-}
-
-function correios_add_admin_menu() {
-    add_menu_page( 'Configurações do Correios', 'Correios', 'manage_options', 'correios_settings', 'correios_settings_page' );
-}
-
