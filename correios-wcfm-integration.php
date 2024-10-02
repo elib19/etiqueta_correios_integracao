@@ -3,7 +3,7 @@
 Plugin Name: Correios Etiquetas - Integração WCFM
 Description: Plugin para integração de etiquetas dos Correios com o WCFM Marketplace. Apenas o administrador configura as credenciais, e os vendedores geram etiquetas.
 Version: 1.0
-Author: Seu Nome
+Author: Eli Silva
 Text Domain: correios-wcfm
 */
 
