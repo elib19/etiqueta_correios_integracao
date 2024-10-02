@@ -29,7 +29,7 @@ function correios_settings_page() {
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row">API Key:</th>
-                    <td><input type="text" name="correios_api_key" value="<?php echo esc_attr( $api_key ); ?>" class="regular-text" required/></td>
+                    <td><input type="text" name="correios_api_key" value="<?php echo esc_attr( $api_key ); ?>" /></td>
                 </tr>
             </table>
             <?php submit_button(); ?>
