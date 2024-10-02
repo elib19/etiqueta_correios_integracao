@@ -22,6 +22,9 @@ include_once 'includes/vendor-dashboard.php';
 include_once 'includes/settings-page.php';
 include_once 'includes/vendor-data-form.php';
 
+// Carregar as views
+include_once 'views/vendor-data-form.php'; // Se necessário, mas pode ser carregado em vendor-dashboard.php
+
 // Função de ativação
 function correios_activate() {
     correios_install();
