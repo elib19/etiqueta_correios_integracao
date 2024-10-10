@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
 
 class Correios_Helper {
 
-    // Chamada de API fictícia para gerar a etiqueta
     public static function gerarEtiqueta($destinatario, $endereco, $cidade, $estado, $cep) {
         $usuario = get_option('correios_wcfm_usuario');
         $cartao = get_option('correios_wcfm_cartao');
