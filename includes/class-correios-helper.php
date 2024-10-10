@@ -1,85 +1,52 @@
 <?php
-defined('ABSPATH') || exit;
+
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 class Correios_Helper {
-    public static function generate_label_interface() {
-        if (!wcfm_is_vendor()) {
-            return; // Apenas vendedores têm acesso
+
+    // Chamada de API fictícia para gerar a etiqueta
+    public static function gerarEtiqueta($destinatario, $endereco, $cidade, $estado, $cep) {
+        $usuario = get_option('correios_wcfm_usuario');
+        $cartao = get_option('correios_wcfm_cartao');
+        $api_key = get_option('correios_wcfm_api_key');
+
+        if (empty($usuario) || empty($cartao) || empty($api_key)) {
+            return new WP_Error('missing_credentials', __('Credenciais dos Correios não configuradas.', 'correios-wcfm-integration'));
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Captura os dados do formulário
-            $destinatario = sanitize_text_field($_POST['destinatario']);
-            $endereco = sanitize_text_field($_POST['endereco']);
-            $cidade = sanitize_text_field($_POST['cidade']);
-            $estado = sanitize_text_field($_POST['estado']);
-            $cep = sanitize_text_field($_POST['cep']);
-            
-            // Chama a função para gerar a etiqueta
-            $resultado = self::gerar_etiqueta($destinatario, $endereco, $cidade, $estado, $cep);
-            
-            // Manipula a resposta
-            if ($resultado['success']) {
-                echo '<div class="updated"><p>Etiqueta gerada com sucesso! Código: ' . esc_html($resultado['codigo']) . '</p></div>';
-            } else {
-                echo '<div class="error"><p>Erro ao gerar etiqueta: ' . esc_html($resultado['mensagem']) . '</p></div>';
-            }
-        }
-
-        include plugin_dir_path(__FILE__) . 'views/correios-generate-label-view.php';
-    }
-
-    private static function gerar_etiqueta($destinatario, $endereco, $cidade, $estado, $cep) {
-        // Obtém as credenciais do administrador
-        $usuario = get_option('correios_api_usuario');
-        $cartao = get_option('correios_api_cartao');
-        $api_key = get_option('correios_api_key');
-
-        // Prepare os dados para a API
-        $dados = array(
-            'usuario' => $usuario,
-            'cartao' => $cartao,
-            'api_key' => $api_key,
+        $dados_etiqueta = array(
+            'usuario'      => $usuario,
+            'cartao'       => $cartao,
+            'api_key'      => $api_key,
             'destinatario' => $destinatario,
-            'endereco' => $endereco,
-            'cidade' => $cidade,
-            'estado' => $estado,
-            'cep' => $cep
+            'endereco'     => $endereco,
+            'cidade'       => $cidade,
+            'estado'       => $estado,
+            'cep'          => $cep,
         );
 
-        // URL da API fictícia dos Correios (substitua pela URL real)
-        $url = 'https://api.correios.com.br/gerarEtiqueta';
-
-        // Faz a requisição à API
-        $response = wp_remote_post($url, array(
-            'method'    => 'POST',
-            'body'      => json_encode($dados),
-            'headers'   => array(
-                'Content-Type' => 'application/json',
+        $api_url = 'https://api.correios.com/v1/gerar_etiqueta';
+        $response = wp_remote_post($api_url, array(
+            'body'    => json_encode($dados_etiqueta),
+            'headers' => array(
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer ' . $api_key
             ),
         ));
 
-        // Verifica a resposta da API
         if (is_wp_error($response)) {
-            return array(
-                'success' => false,
-                'mensagem' => $response->get_error_message(),
-            );
+            return $response;
         }
 
-        $body = json_decode(wp_remote_retrieve_body($response), true);
+        $response_body = wp_remote_retrieve_body($response);
+        $result = json_decode($response_body, true);
 
-        // Processa a resposta
-        if (isset($body['sucesso']) && $body['sucesso']) {
-            return array(
-                'success' => true,
-                'codigo' => $body['codigo'], // Código da etiqueta gerada
-            );
-        } else {
-            return array(
-                'success' => false,
-                'mensagem' => $body['mensagem'] ?? 'Erro desconhecido.',
-            );
+        if (isset($result['erro'])) {
+            return new WP_Error('api_error', __('Erro ao gerar a etiqueta: ' . $result['erro'], 'correios-wcfm-integration'));
         }
+
+        return $result['etiqueta_url'];
     }
 }
