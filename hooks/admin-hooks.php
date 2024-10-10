@@ -52,7 +52,7 @@ function correios_admin_settings() {
     );
     register_setting('correios_settings_group', 'correios_user');
 
-    // Campo do Cartão Correios Fácil
+        // Campo do Cartão Correios Fácil
     add_settings_field(
         'correios_cartao', 
         __('Cartão Correios Fácil', 'correios-wcfm'), 
@@ -88,3 +88,4 @@ function correios_api_key_callback() {
     $api_key = get_option('correios_api_key');
     echo "<input type='text' name='correios_api_key' value='" . esc_attr($api_key) . "' />";
 }
+?>
