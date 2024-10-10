@@ -11,6 +11,8 @@ class Correios_Uninstall {
         delete_option('correios_wcfm_usuario');
         delete_option('correios_wcfm_cartao');
         delete_option('correios_wcfm_api_key');
+
+        // Você pode adicionar outras operações de limpeza de banco de dados aqui, se necessário
     }
 }
 ?>
