@@ -1,35 +1,38 @@
 <?php
-/*
-Plugin Name: Correios Etiquetas - Integração WCFM
-Description: Plugin para integração de etiquetas dos Correios com o WCFM Marketplace. Apenas o administrador configura as credenciais, e os vendedores geram etiquetas.
-Version: 1.0
-Author: Eli Silva
-Text Domain: correios-wcfm
-*/
+/**
+ * Plugin Name: Correios WCFM Integration
+ * Description: Integração de etiquetas dos Correios com WCFM.
+ * Version: 1.0.0
+ * Author: Eli Silva
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Bloquear acesso direto
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
 }
 
-// Definir constantes do plugin
-define( 'CORREIOS_WCFM_PATH', plugin_dir_path( __FILE__ ) );
-define( 'CORREIOS_WCFM_URL', plugin_dir_url( __FILE__ ) );
-
-// Carregar classes principais
-include_once CORREIOS_WCFM_PATH . 'includes/class-correios-install.php';
-include_once CORREIOS_WCFM_PATH . 'includes/class-correios-uninstall.php';
-include_once CORREIOS_WCFM_PATH . 'includes/class-correios-settings.php';
-include_once CORREIOS_WCFM_PATH . 'includes/class-correios-helper.php';
-
-// Registro de ativação e desativação
-register_activation_hook( __FILE__, array( 'Correios_Install', 'install' ) );
-register_deactivation_hook( __FILE__, array( 'Correios_Uninstall', 'uninstall' ) );
-
-// Inicializar o plugin
-function correios_wcfm_init() {
-    if ( is_admin() ) {
-        Correios_Settings::init();
+class Correios_WCFM_Integration {
+    
+    public function __construct() {
+        add_action('init', array($this, 'register_scripts'));
+        add_action('wcfm_menu', array($this, 'add_correios_menu'), 25);
     }
-    Correios_Helper::init();
+
+    public function register_scripts() {
+        wp_register_script('correios_wcfm_js', plugin_dir_url(__FILE__) . 'assets/js/correios-wcfm.js', array('jquery'), '1.0', true);
+        wp_register_style('correios_wcfm_css', plugin_dir_url(__FILE__) . 'assets/css/correios-wcfm.css', array(), '1.0');
+    }
+
+    public function add_correios_menu($menus) {
+        $menus['correios-etiquetas'] = array(
+            'label' => __('Gerar Etiquetas', 'correios-wcfm-integration'),
+            'url' => get_wcfm_page(), // Página do WCFM que será usada
+            'icon' => 'wcfmfa fa-truck',
+            'priority' => 55
+        );
+
+        return $menus;
+    }
 }
-add_action( 'plugins_loaded', 'correios_wcfm_init' );
+
+new Correios_WCFM_Integration();
+
