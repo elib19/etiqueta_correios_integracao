@@ -19,6 +19,8 @@ class Correios_Install {
         if ( ! get_option('correios_wcfm_api_key') ) {
             add_option('correios_wcfm_api_key', '');
         }
+
+        // Você pode adicionar qualquer outra configuração ou operação que precise ser feita na instalação do plugin
     }
 }
 ?>
