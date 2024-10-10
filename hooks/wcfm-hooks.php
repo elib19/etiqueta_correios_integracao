@@ -25,7 +25,7 @@ function virtuaria_wcfm_etiquetas_page($view) {
     global $WCFM, $wp_query;
 
     if (isset($wp_query->query_vars['virtuaria-etiquetas'])) {
-        // Debug para verificar se a página está sendo chamada
+        // Debug: Verifica se a página está sendo chamada
         if (file_exists(plugin_dir_path(__FILE__) . '../views/virtuaria-wcfm-view.php')) {
             $WCFM->template->get_template('virtuaria-wcfm-view.php', array());
         } else {
