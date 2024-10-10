@@ -3,7 +3,7 @@
 Plugin Name: Correios Etiquetas WCFM
 Description: Plugin para emissão de etiquetas dos Correios compatível com WooCommerce e WCFM.
 Version: 1.0
-Author: Seu Nome
+Author: Eli Silva
 */
 
 // Evita o acesso direto ao arquivo
