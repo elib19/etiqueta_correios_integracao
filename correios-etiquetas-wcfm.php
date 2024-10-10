@@ -23,19 +23,31 @@ include_once CORREIOS_WCFM_PLUGIN_PATH . 'hooks/admin-hooks.php';
 include_once CORREIOS_WCFM_PLUGIN_PATH . 'hooks/frontend-hooks.php';
 include_once CORREIOS_WCFM_PLUGIN_PATH . 'hooks/wcfm-hooks.php';
 
+// Verifica se WooCommerce e WCFM estão ativos
+add_action('plugins_loaded', 'correios_wcfm_check_dependencies');
+function correios_wcfm_check_dependencies() {
+    if ( !class_exists('WooCommerce') || !class_exists('WCFMmp') ) {
+        add_action('admin_notices', 'correios_wcfm_missing_dependencies_notice');
+        deactivate_plugins(plugin_basename(__FILE__));
+    } else {
+        correios_wcfm_init();
+    }
+}
+
+function correios_wcfm_missing_dependencies_notice() {
+    echo '<div class="error"><p><strong>Correios WCFM Integration:</strong> Este plugin requer WooCommerce e WCFM Marketplace ativos para funcionar corretamente.</p></div>';
+}
+
+// Inicializa as configurações e funções do plugin
+function correios_wcfm_init() {
+    Correios_Settings::init();
+}
+
 // Ativa o plugin
 register_activation_hook(__FILE__, array('Correios_Install', 'install'));
 
 // Desativa o plugin
 register_uninstall_hook(__FILE__, array('Correios_Uninstall', 'uninstall'));
-
-// Inicializa as configurações e funções do plugin
-add_action('plugins_loaded', 'correios_wcfm_init');
-function correios_wcfm_init() {
-    if (class_exists('WCFMmp')) {
-        Correios_Settings::init();
-    }
-}
 
 // Enfileirar os estilos CSS e scripts JS
 function correios_enqueue_assets() {
