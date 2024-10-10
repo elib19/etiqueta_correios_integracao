@@ -3,7 +3,7 @@
  * Plugin Name: Virtuaria Correios WCFM Integration
  * Description: Integração de geração de etiquetas dos Correios para o WCFM no WooCommerce.
  * Version: 1.0.0
- * Author: Seu Nome
+ * Author: Eli Silva
  * Text Domain: virtuaria-correios
  */
 
