@@ -37,17 +37,11 @@ function correios_wcfm_init() {
     }
 }
 
-// Enfileirar os estilos CSS
-function correios_enqueue_styles() {
+// Enfileirar os estilos CSS e scripts JS
+function correios_enqueue_assets() {
     wp_enqueue_style('correios-admin-styles', plugin_dir_url(__FILE__) . 'assets/css/correios-styles.css');
-}
-add_action('admin_enqueue_scripts', 'correios_enqueue_styles');
-add_action('wp_enqueue_scripts', 'correios_enqueue_styles');
-
-// Enfileirar os scripts JS
-function correios_enqueue_scripts() {
     wp_enqueue_script('correios-scripts', plugin_dir_url(__FILE__) . 'assets/js/correios-scripts.js', array('jquery'), false, true);
 }
-add_action('admin_enqueue_scripts', 'correios_enqueue_scripts');
-add_action('wp_enqueue_scripts', 'correios_enqueue_scripts');
+add_action('admin_enqueue_scripts', 'correios_enqueue_assets');
+add_action('wp_enqueue_scripts', 'correios_enqueue_assets');
 ?>
