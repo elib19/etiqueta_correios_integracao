@@ -1,7 +1,10 @@
+// assets/js/correios-scripts.js
+
 jQuery(document).ready(function($) {
-    // Scripts customizados para o plugin Correios WCFM Integration
+    // Função de exemplo: Mostra uma mensagem de alerta quando o formulário é enviado
+    $('form').on('submit', function() {
+        alert('Formulário enviado! Processando a etiqueta...');
+    });
 
-    console.log('Correios WCFM Integration ativo!');
-
-    // Se houver alguma lógica específica para JavaScript no futuro, pode ser adicionada aqui
+    // Você pode adicionar mais funções aqui conforme necessário
 });
