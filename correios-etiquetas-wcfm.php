@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Correios WCFM e Woocommerce Integration
+Plugin Name: Correios WCFM Integration
 Description: Integração de etiquetas dos Correios com WCFM, onde o administrador configura as credenciais e os vendedores geram as etiquetas.
 Version: 1.0
 Author: Eli Silva
@@ -13,15 +13,6 @@ if (!defined('ABSPATH')) {
 // Define as constantes do plugin
 define('CORREIOS_WCFM_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('CORREIOS_WCFM_PLUGIN_URL', plugin_dir_url(__FILE__));
-
-// Inclui os arquivos necessários
-include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-helper.php';
-include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-settings.php';
-include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-install.php';
-include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-uninstall.php';
-include_once CORREIOS_WCFM_PLUGIN_PATH . 'hooks/admin-hooks.php';
-include_once CORREIOS_WCFM_PLUGIN_PATH . 'hooks/frontend-hooks.php';
-include_once CORREIOS_WCFM_PLUGIN_PATH . 'hooks/wcfm-hooks.php';
 
 // Verifica se WooCommerce e WCFM estão ativos
 add_action('plugins_loaded', 'correios_wcfm_check_dependencies');
@@ -40,6 +31,14 @@ function correios_wcfm_missing_dependencies_notice() {
 
 // Inicializa as configurações e funções do plugin
 function correios_wcfm_init() {
+    include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-helper.php';
+    include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-settings.php';
+    include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-install.php';
+    include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-uninstall.php';
+    include_once CORREIOS_WCFM_PLUGIN_PATH . 'hooks/admin-hooks.php';
+    include_once CORREIOS_WCFM_PLUGIN_PATH . 'hooks/frontend-hooks.php';
+    include_once CORREIOS_WCFM_PLUGIN_PATH . 'hooks/wcfm-hooks.php';
+
     Correios_Settings::init();
 }
 
