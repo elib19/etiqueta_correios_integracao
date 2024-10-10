@@ -36,4 +36,3 @@ function virtuaria_correios_uninstall() {
     delete_option('virtuaria_correios_cartao');
 }
 register_uninstall_hook(__FILE__, 'virtuaria_correios_uninstall');
-
