@@ -1,7 +1,6 @@
 <?php
-
 if (!defined('ABSPATH')) {
-    exit;
+    exit; // Sair se acessado diretamente
 }
 
 class Correios_Settings {
