@@ -25,8 +25,12 @@ function virtuaria_wcfm_etiquetas_page($view) {
     global $WCFM, $wp_query;
 
     if (isset($wp_query->query_vars['virtuaria-etiquetas'])) {
-        // Verifica se a página de etiquetas está sendo chamada
-        $WCFM->template->get_template('virtuaria-wcfm-view.php', array());
+        // Debug para verificar se a página está sendo chamada
+        if (file_exists(plugin_dir_path(__FILE__) . '../views/virtuaria-wcfm-view.php')) {
+            $WCFM->template->get_template('virtuaria-wcfm-view.php', array());
+        } else {
+            echo '<div class="notice notice-error"><p>' . __('Erro: Arquivo de template não encontrado.', 'virtuaria-correios') . '</p></div>';
+        }
     }
 }
 ?>
