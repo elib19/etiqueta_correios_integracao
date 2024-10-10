@@ -14,4 +14,20 @@ function correios_wcfm_menu($menus) {
     }
     return $menus;
 }
+
+// Adiciona o endpoint para a página de geração de etiquetas
+add_action('init', 'correios_add_wcfm_endpoints');
+function correios_add_wcfm_endpoints() {
+    add_rewrite_endpoint('correios-etiquetas', EP_PAGES);
+}
+
+// Renderiza a página de geração de etiquetas no painel do vendedor
+add_action('wcfm_load_views', 'correios_wcfm_etiquetas_page');
+function correios_wcfm_etiquetas_page($view) {
+    global $WCFM, $wp_query;
+
+    if (isset($wp_query->query_vars['correios-etiquetas'])) {
+        $WCFM->template->get_template('correios-wcfm-view.php', array());
+    }
+}
 ?>
