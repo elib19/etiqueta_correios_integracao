@@ -19,6 +19,10 @@ include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-helper.php';
 include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-settings.php';
 include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-install.php';
 include_once CORREIOS_WCFM_PLUGIN_PATH . 'includes/class-correios-uninstall.php';
+// Inclui os arquivos de hooks
+include_once plugin_dir_path(__FILE__) . 'hooks/wcfm-hooks.php';
+include_once plugin_dir_path(__FILE__) . 'hooks/admin-hooks.php';
+include_once plugin_dir_path(__FILE__) . 'hooks/frontend-hooks.php';
 
 // Ativa o plugin
 register_activation_hook(__FILE__, array('Correios_Install', 'install'));
