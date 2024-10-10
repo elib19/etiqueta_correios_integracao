@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $usuario = get_option('virtuaria_correios_usuario');
         $cartao  = get_option('virtuaria_correios_cartao');
 
-        // Aqui, você deve garantir que a classe Correios_Helper e o método gerarEtiqueta existam
+        // Verifica se a classe Correios_Helper e o método gerarEtiqueta existem
         if (class_exists('Correios_Helper') && method_exists('Correios_Helper', 'gerarEtiqueta')) {
             $etiqueta_url = Correios_Helper::gerarEtiqueta($destinatario, $endereco, $cidade, $estado, $cep, $usuario, $cartao, $api_key);
 
