@@ -1,6 +1,7 @@
 <div class="wrap correios-vendor-generate">
     <h1><?php _e('Gerar Etiqueta de Envio', 'virtuaria-correios'); ?></h1>
     <form method="post" action="">
+        <?php wp_nonce_field('gerar_etiqueta', 'gerar_etiqueta_nonce'); ?>
         <table class="form-table">
             <tr valign="top">
                 <th scope="row"><?php _e('Destinatário', 'virtuaria-correios'); ?></th>
@@ -29,24 +30,18 @@
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $destinatario = sanitize_text_field($_POST['destinatario']);
-    $endereco     = sanitize_text_field($_POST['endereco']);
-    $cidade       = sanitize_text_field($_POST['cidade']);
-    $estado       = sanitize_text_field($_POST['estado']);
-    $cep          = sanitize_text_field($_POST['cep']);
+    if (isset($_POST['gerar_etiqueta_nonce']) && wp_verify_nonce($_POST['gerar_etiqueta_nonce'], 'gerar_etiqueta')) {
+        $destinatario = sanitize_text_field($_POST['destinatario']);
+        $endereco     = sanitize_text_field($_POST['endereco']);
+        $cidade       = sanitize_text_field($_POST['cidade']);
+        $estado       = sanitize_text_field($_POST['estado']);
+        $cep          = sanitize_text_field($_POST['cep']);
 
-    // Utiliza as credenciais do administrador para gerar a etiqueta
-    $api_key = get_option('virtuaria_correios_api_key');
-    $usuario = get_option('virtuaria_correios_usuario');
-    $cartao  = get_option('virtuaria_correios_cartao');
+        // Utiliza as credenciais do administrador para gerar a etiqueta
+        $api_key = get_option('virtuaria_correios_api_key');
+        $usuario = get_option('virtuaria_correios_usuario');
+        $cartao  = get_option('virtuaria_correios_cartao');
 
-    if (!$api_key || !$usuario || !$cartao) {
-        echo '<div class="notice notice-error"><p>' . __('Credenciais dos Correios não encontradas. Verifique as configurações.', 'virtuaria-correios') . '</p></div>';
-        return;
-    }
-
-    // Exemplo de chamada à função para gerar etiqueta
-    if (class_exists('Correios_Helper')) {
         $etiqueta_url = Correios_Helper::gerarEtiqueta($destinatario, $endereco, $cidade, $estado, $cep, $usuario, $cartao, $api_key);
 
         if (is_wp_error($etiqueta_url)) {
@@ -56,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo '<a href="' . esc_url($etiqueta_url) . '" class="button button-primary" target="_blank">' . __('Baixar Etiqueta', 'virtuaria-correios') . '</a></div>';
         }
     } else {
-        echo '<div class="notice notice-error"><p>' . __('Erro: A classe Correios_Helper não está disponível.', 'virtuaria-correios') . '</p></div>';
+        echo '<div class="notice notice-error"><p>' . __('Token inválido. Tente novamente.', 'virtuaria-correios') . '</p></div>';
     }
 }
-?>
+
