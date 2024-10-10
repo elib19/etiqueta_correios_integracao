@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Correios WCFM Integration
+Plugin Name: Correios WCFM e Woocommerce Integration
 Description: Integração de etiquetas dos Correios com WCFM, onde o administrador configura as credenciais e os vendedores geram as etiquetas.
 Version: 1.0
 Author: Eli Silva
