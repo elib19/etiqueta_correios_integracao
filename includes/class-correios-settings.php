@@ -27,8 +27,4 @@ class Correios_Settings {
         register_setting('correios_settings_group', 'correios_wcfm_api_key');
     }
 
-    public static function settings_page() {
-        include CORREIOS_WCFM_PLUGIN_PATH . 'views/correios-admin-settings.php';
-    }
-}
-?>
+    public static function settings_page()
