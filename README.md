@@ -1,57 +1,56 @@
-# Correios Etiqueta e Declaração para WCFM
+# Virtuaria Correios WCFM Integration
 
-## Descrição
-
-O **Correios Etiqueta e Declaração para WCFM** é um plugin para WordPress que permite que vendedores em marketplaces que usam o WCFM (WooCommerce Multivendor Marketplace) gerem etiquetas de envio e declarações de conteúdo para seus produtos, utilizando a API dos Correios. Este plugin possibilita a configuração da chave API e do contrato apenas pelo administrador do site, garantindo que todos os vendedores utilizem as mesmas credenciais.
-
-## Funcionalidades
-
-- Integração com a API dos Correios.
-- Formulário de dados do remetente para vendedores.
-- Configuração centralizada da chave API e contrato pelo administrador.
-- Registro e armazenamento seguro dos dados dos vendedores.
-
-## Requisitos
-
-- WordPress 5.0 ou superior.
-- WooCommerce.
-- WCFM Marketplace.
+**Plugin Name:** Virtuaria Correios WCFM Integration  
+**Description:** Integração de geração de etiquetas dos Correios para o WCFM no WooCommerce. Permite que vendedores do WCFM gerem etiquetas de envio utilizando as credenciais da conta dos Correios do administrador.  
+**Version:** 1.0.0  
+**Author:** Eli Silva
+**Text Domain:** virtuaria-correios  
 
 ## Instalação
 
-1. **Baixe o Plugin**:
-   - Clone ou faça o download do repositório.
+1. **Download do Plugin:**
+   - Baixe o arquivo ZIP do plugin.
 
-2. **Instale o Plugin**:
-   - Acesse o painel do WordPress e vá para **Plugins > Adicionar Novo > Enviar Plugin**.
-   - Selecione o arquivo `.zip` do plugin e clique em **Instalar Agora**.
-   - Após a instalação, ative o plugin.
+2. **Instalação via Painel do WordPress:**
+   - Acesse o painel do WordPress.
+   - Vá para **Plugins > Adicionar Novo**.
+   - Clique em **Enviar Plugin** e escolha o arquivo ZIP do plugin.
+   - Clique em **Instalar Agora** e depois em **Ativar**.
 
-3. **Configurações**:
-   - Acesse o menu **Correios** no painel do WordPress para configurar a chave API.
-   - Os vendedores poderão acessar suas configurações para preencher os dados do remetente.
+3. **Instalação Manual:**
+   - Extraia o arquivo ZIP e faça upload da pasta `virtuaria-correios-wcfm` para o diretório `/wp-content/plugins/`.
+   - Acesse o painel do WordPress e ative o plugin em **Plugins**.
 
 ## Uso
 
-- **Para Administradores**:
-  - Acesse **Correios > Configurações** para inserir a chave da API dos Correios.
-  
-- **Para Vendedores**:
-  - Acesse **Minha Loja** no painel do WCFM e preencha os dados do remetente.
+1. Após a ativação, acesse o painel do WCFM como um vendedor.
+2. No menu, você verá a opção **Gerar Etiqueta Correios**.
+3. Preencha o formulário com as informações do destinatário, endereço, cidade, estado e CEP.
+4. Clique em **Gerar Etiqueta** para criar a etiqueta de envio.
+5. Caso as credenciais dos Correios não estejam configuradas, você verá uma mensagem de erro.
 
-## Contribuições
+## Configurações
 
-Contribuições são bem-vindas! Para contribuir:
+Para que o plugin funcione corretamente, você deve definir as seguintes opções:
 
-1. Fork o repositório.
-2. Crie uma nova branch (`git checkout -b feature/MinhaNovaFuncionalidade`).
-3. Faça suas alterações e comite (`git commit -m 'Adicionando uma nova funcionalidade'`).
-4. Faça um push para a branch (`git push origin feature/MinhaNovaFuncionalidade`).
-5. Abra uma pull request.
+- **API Key dos Correios**
+- **Usuário dos Correios**
+- **Cartão Correios Fácil**
+
+Essas configurações podem ser feitas no banco de dados do WordPress. Você pode usar um plugin como **Advanced Custom Fields** ou criar uma página de configurações no plugin para gerenciá-las.
+
+## Contribuição
+
+Sinta-se à vontade para contribuir com melhorias e correções. Faça um fork do repositório e envie um pull request.
 
 ## Licença
 
-Este plugin é licenciado sob a Licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
+Este plugin é licenciado sob a [Licença GPL](https://www.gnu.org/licenses/gpl-3.0.html).
+
+## Contato
+
+Para dúvidas ou suporte, entre em contato pelo e-mail: seu-email@dominio.com
+
 
 ## Contato
 
