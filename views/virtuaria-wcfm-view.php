@@ -30,6 +30,7 @@
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Verifica o nonce para segurança
     if (isset($_POST['gerar_etiqueta_nonce']) && wp_verify_nonce($_POST['gerar_etiqueta_nonce'], 'gerar_etiqueta')) {
         $destinatario = sanitize_text_field($_POST['destinatario']);
         $endereco     = sanitize_text_field($_POST['endereco']);
@@ -37,10 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $estado       = sanitize_text_field($_POST['estado']);
         $cep          = sanitize_text_field($_POST['cep']);
 
+        // Debug: Exibir os dados recebidos
+        echo '<pre>' . print_r(compact('destinatario', 'endereco', 'cidade', 'estado', 'cep'), true) . '</pre>';
+
         // Utiliza as credenciais do administrador para gerar a etiqueta
         $api_key = get_option('virtuaria_correios_api_key');
         $usuario = get_option('virtuaria_correios_usuario');
         $cartao  = get_option('virtuaria_correios_cartao');
+
+        // Debug: Verifica se as credenciais estão definidas
+        echo '<pre>' . print_r(compact('api_key', 'usuario', 'cartao'), true) . '</pre>';
 
         // Verifica se a classe Correios_Helper e o método gerarEtiqueta existem
         if (class_exists('Correios_Helper') && method_exists('Correios_Helper', 'gerarEtiqueta')) {
