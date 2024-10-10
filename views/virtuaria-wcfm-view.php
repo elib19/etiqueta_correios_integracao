@@ -42,16 +42,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $usuario = get_option('virtuaria_correios_usuario');
         $cartao  = get_option('virtuaria_correios_cartao');
 
-        $etiqueta_url = Correios_Helper::gerarEtiqueta($destinatario, $endereco, $cidade, $estado, $cep, $usuario, $cartao, $api_key);
+        // Aqui, você deve garantir que a classe Correios_Helper e o método gerarEtiqueta existam
+        if (class_exists('Correios_Helper') && method_exists('Correios_Helper', 'gerarEtiqueta')) {
+            $etiqueta_url = Correios_Helper::gerarEtiqueta($destinatario, $endereco, $cidade, $estado, $cep, $usuario, $cartao, $api_key);
 
-        if (is_wp_error($etiqueta_url)) {
-            echo '<div class="notice notice-error"><p>' . $etiqueta_url->get_error_message() . '</p></div>';
+            if (is_wp_error($etiqueta_url)) {
+                echo '<div class="notice notice-error"><p>' . $etiqueta_url->get_error_message() . '</p></div>';
+            } else {
+                echo '<div class="notice notice-success"><p>' . __('Etiqueta gerada com sucesso! Baixe a etiqueta abaixo:', 'virtuaria-correios') . '</p>';
+                echo '<a href="' . esc_url($etiqueta_url) . '" class="button button-primary" target="_blank">' . __('Baixar Etiqueta', 'virtuaria-correios') . '</a></div>';
+            }
         } else {
-            echo '<div class="notice notice-success"><p>' . __('Etiqueta gerada com sucesso! Baixe a etiqueta abaixo:', 'virtuaria-correios') . '</p>';
-            echo '<a href="' . esc_url($etiqueta_url) . '" class="button button-primary" target="_blank">' . __('Baixar Etiqueta', 'virtuaria-correios') . '</a></div>';
+            echo '<div class="notice notice-error"><p>' . __('Erro: Classe ou método de geração de etiqueta não encontrados.', 'virtuaria-correios') . '</p></div>';
         }
     } else {
         echo '<div class="notice notice-error"><p>' . __('Token inválido. Tente novamente.', 'virtuaria-correios') . '</p></div>';
     }
 }
-
