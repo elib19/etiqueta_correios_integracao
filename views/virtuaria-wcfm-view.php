@@ -31,3 +31,36 @@
         <?php submit_button(__('Gerar Etiqueta', 'virtuaria-correios')); ?>
     </form>
 </div>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['gerar_etiqueta_nonce']) && wp_verify_nonce($_POST['gerar_etiqueta_nonce'], 'gerar_etiqueta')) {
+        $destinatario = sanitize_text_field($_POST['destinatario']);
+        $endereco     = sanitize_text_field($_POST['endereco']);
+        $cidade       = sanitize_text_field($_POST['cidade']);
+        $estado       = sanitize_text_field($_POST['estado']);
+        $cep          = sanitize_text_field($_POST['cep']);
+        $cartao       = sanitize_text_field($_POST['cartao_postagem']);
+
+        // Utiliza as credenciais do administrador para gerar a etiqueta
+        $api_key = get_option('virtuaria_correios_api_key');
+        $usuario = get_option('virtuaria_correios_usuario');
+
+        // Verifica se a classe Correios_Helper e o método gerarEtiqueta existem
+        if (class_exists('Correios_Helper') && method_exists('Correios_Helper', 'gerarEtiqueta')) {
+            $etiqueta_url = Correios_Helper::gerarEtiqueta($destinatario, $endereco, $cidade, $estado, $cep, $usuario, $cartao, $api_key);
+
+            if (is_wp_error($etiqueta_url)) {
+                echo '<div class="notice notice-error"><p>' . $etiqueta_url->get_error_message() . '</p></div>';
+            } else {
+                echo '<div class="notice notice-success"><p>' . __('Etiqueta gerada com sucesso! Baixe a etiqueta abaixo:', 'virtuaria-correios') . '</p>';
+                echo '<a href="' . esc_url($etiqueta_url) . '" class="button button-primary" target="_blank">' . __('Baixar Etiqueta', 'virtuaria-correios') . '</a></div>';
+            }
+        } else {
+            echo '<div class="notice notice-error"><p>' . __('Erro: Classe ou método de geração de etiqueta não encontrados.', 'virtuaria-correios') . '</p></div>';
+        }
+    } else {
+        echo '<div class="notice notice-error"><p>' . __('Token inválido. Tente novamente.', 'virtuaria-correios') . '</p></div>';
+    }
+}
+?>
