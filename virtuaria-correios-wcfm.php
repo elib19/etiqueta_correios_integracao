@@ -38,8 +38,3 @@ function virtuaria_correios_uninstall() {
     delete_option('virtuaria_correios_cartao');
 }
 register_uninstall_hook(__FILE__, 'virtuaria_correios_uninstall');
-
-// Verifica se a classe Correios_Helper existe
-if (!class_exists('Correios_Helper')) {
-    error_log('A classe Correios_Helper não está definida.');
-}
