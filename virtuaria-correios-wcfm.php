@@ -1,6 +1,7 @@
 <?php
 /**
  * Plugin Name: Virtuaria Correios WCFM Integration
+ * Plugin URI: https://brasilnarede.online
  * Description: Integração de geração de etiquetas dos Correios para o WCFM no WooCommerce.
  * Version: 1.0.0
  * Author: Eli Silva
@@ -11,9 +12,9 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-// Inclui os hooks do WCFM
+// Inclui os arquivos necessários
 require_once plugin_dir_path(__FILE__) . 'hooks/wcfm-hooks.php';
-require_once plugin_dir_path(__FILE__) . 'unistall.php';
+require_once plugin_dir_path(__FILE__) . 'includes/virtuaria-wrappers.php';
 
 // Função de ativação do plugin
 function virtuaria_correios_activate() {
@@ -37,4 +38,3 @@ function virtuaria_correios_uninstall() {
     delete_option('virtuaria_correios_cartao');
 }
 register_uninstall_hook(__FILE__, 'virtuaria_correios_uninstall');
-
