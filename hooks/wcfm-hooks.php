@@ -32,4 +32,4 @@ function virtuaria_wcfm_etiquetas_page($view) {
         }
     }
 }
-?>
+
