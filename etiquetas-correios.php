@@ -3,7 +3,7 @@
  * Plugin Name: Etiquetas Correios WCFM Integration
  * Description: Plugin para integrar a geração de etiquetas dos Correios com o WCFM.
  * Version: 1.0
- * Author: Seu Nome
+ * Author: Eli Silva
  */
 
 // Evita acesso direto ao arquivo
