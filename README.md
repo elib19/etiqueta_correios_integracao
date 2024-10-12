@@ -1,57 +1,49 @@
-# Virtuaria Correios WCFM Integration
+# Etiquetas Correios para WCFM
 
-**Plugin Name:** Virtuaria Correios WCFM Integration  
-**Description:** Integração de geração de etiquetas dos Correios para o WCFM no WooCommerce. Permite que vendedores do WCFM gerem etiquetas de envio utilizando as credenciais da conta dos Correios do administrador.  
-**Version:** 1.0.0  
-**Author:** Eli Silva
-**Text Domain:** virtuaria-correios  
+## Descrição
+
+O plugin **Etiquetas Correios para WCFM** permite que vendedores gerem etiquetas de envio utilizando as credenciais do administrador do site. Este plugin se integra ao WCFM Marketplace e fornece um interface amigável para facilitar o processo de envio através dos Correios.
+
+## Funcionalidades
+
+- Adição de um menu no WCFM para geração de etiquetas.
+- Redirecionamento para o site dos Correios para criar etiquetas.
+- Opção de preenchimento automático de usuário e senha via bookmarklet.
+- Sistema de segurança que expira o bookmarklet após 90 segundos.
+
+## Requisitos
+
+- WordPress 5.0 ou superior
+- WooCommerce
+- WCFM Marketplace
 
 ## Instalação
 
-1. **Download do Plugin:**
-   - Baixe o arquivo ZIP do plugin.
+1. Faça o download do plugin.
+2. No painel do WordPress, vá para **Plugins > Adicionar Novo**.
+3. Clique em **Enviar Plugin** e selecione o arquivo ZIP do plugin.
+4. Clique em **Instalar Agora** e depois em **Ativar**.
 
-2. **Instalação via Painel do WordPress:**
-   - Acesse o painel do WordPress.
-   - Vá para **Plugins > Adicionar Novo**.
-   - Clique em **Enviar Plugin** e escolha o arquivo ZIP do plugin.
-   - Clique em **Instalar Agora** e depois em **Ativar**.
+## Configuração
 
-3. **Instalação Manual:**
-   - Extraia o arquivo ZIP e faça upload da pasta `virtuaria-correios-wcfm` para o diretório `/wp-content/plugins/`.
-   - Acesse o painel do WordPress e ative o plugin em **Plugins**.
+- Após ativar o plugin, acesse a página de **Gerar Etiquetas Correios** no menu do WCFM.
+- O administrador deve inserir o **usuário** e a **senha** dos Correios nas configurações do plugin para que os vendedores possam utilizá-las.
 
-## Uso
+## Desinstalação
 
-1. Após a ativação, acesse o painel do WCFM como um vendedor.
-2. No menu, você verá a opção **Gerar Etiqueta Correios**.
-3. Preencha o formulário com as informações do destinatário, endereço, cidade, estado e CEP.
-4. Clique em **Gerar Etiqueta** para criar a etiqueta de envio.
-5. Caso as credenciais dos Correios não estejam configuradas, você verá uma mensagem de erro.
+Para desinstalar o plugin:
 
-## Configurações
+1. No painel do WordPress, vá para **Plugins > Plugins Instalados**.
+2. Encontre o plugin **Etiquetas Correios para WCFM** e clique em **Desativar**.
+3. Em seguida, clique em **Excluir**.
 
-Para que o plugin funcione corretamente, você deve definir as seguintes opções:
+## Contato
 
-- **API Key dos Correios**
-- **Usuário dos Correios**
-- **Cartão Correios Fácil**
+Para suporte ou dúvidas, entre em contato com:
 
-Essas configurações podem ser feitas no banco de dados do WordPress. Você pode usar um plugin como **Advanced Custom Fields** ou criar uma página de configurações no plugin para gerenciá-las.
-
-## Contribuição
-
-Sinta-se à vontade para contribuir com melhorias e correções. Faça um fork do repositório e envie um pull request.
+**Eli Silva**  
+Website: [brasilnarede.online](http://brasilnarede.online)
 
 ## Licença
 
-Este plugin é licenciado sob a [Licença GPL](https://www.gnu.org/licenses/gpl-3.0.html).
-
-## Contato
-
-Para dúvidas ou suporte, entre em contato pelo e-mail: seu-email@dominio.com
-
-
-## Contato
-
-Para dúvidas ou suporte, entre em contato com [Eli Silva](http://brasilnarede.online).
+Este plugin é licenciado sob a [Licença GPL v2](http://www.gnu.org/licenses/gpl-2.0.html).
